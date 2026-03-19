@@ -1,197 +1,735 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mi Documentación · GitHub Pages</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
   <style>
-    /* ── Variables de color ── */
     :root {
-      --verde: #2D6A4F;
-      --verde-claro: #D8F3DC;
-      --acento: #52B788;
-      --fondo: #F8F9FA;
-      --texto: #1A1A1A;
-      --gris: #6C757D;
+      --bg: #0c0f0a;
+      --surface: #141810;
+      --surface2: #1c2218;
+      --accent: #a8e063;
+      --accent2: #56c4a0;
+      --gold: #e8c96d;
+      --text: #e8ead4;
+      --muted: #7a8a6e;
+      --border: #2a3424;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    html { scroll-behavior: smooth; }
+ 
     body {
-      font-family: Georgia, serif;
-      background: var(--fondo);
-      color: var(--texto);
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
       line-height: 1.7;
+      overflow-x: hidden;
     }
-    /* ── Cabecera ── */
+ 
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.6;
+    }
+ 
+    /* ── HEADER ── */
     header {
-      background: var(--verde);
-      color: white;
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-    header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    header p  { opacity: 0.8; font-size: 1.1rem; }
-    /* ── Navegación ── */
-    nav {
-      background: #1B4332;
+      position: relative;
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      gap: 1rem;
-      padding: 0.75rem;
-      flex-wrap: wrap;
+      padding: 4rem 2rem 6rem;
+      overflow: hidden;
     }
-nav a {
-      color: #95D5B2;
-      text-decoration: none;
-      font-family: monospace;
-      font-size: 0.9rem;
-      padding: 0.3rem 0.8rem;
-      border-radius: 4px;
-      transition: background 0.2s;
+ 
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0; right: 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--bg));
+      pointer-events: none;
     }
-    nav a:hover { background: rgba(255,255,255,0.1); color: white; }
-    /* ── Contenido principal ── */
-    main {
-      max-width: 860px;
-      margin: 2rem auto;
-      padding: 0 1.5rem 4rem;
-    }
-    section { margin-bottom: 3rem; }
-    h2 {
-      font-size: 1.6rem;
-      color: var(--verde);
-      border-left: 4px solid var(--acento);
-      padding-left: 0.75rem;
-      margin-bottom: 1rem;
-    }
-    h3 { color: var(--gris); margin: 1.2rem 0 0.5rem; }
-    p  { margin-bottom: 0.8rem; }
-    /* ── Tarjetas de pasos ── */
-    .pasos { display: grid; gap: 1rem; }
-    .paso {
-      display: grid;
-      grid-template-columns: 50px 1fr;
-      gap: 1rem;
-      background: white;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      padding: 1rem;
-    }
-    .num {
-      background: var(--verde);
-      color: white;
-      font-size: 1.3rem;
-      font-weight: bold;
+ 
+    .hero-glow {
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
       border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,224,99,0.12) 0%, transparent 70%);
+      animation: pulse 8s ease-in-out infinite;
+    }
+ 
+    .hero-glow-2 {
+      position: absolute;
+      bottom: -100px; left: -150px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(86,196,160,0.08) 0%, transparent 70%);
+      animation: pulse 10s ease-in-out infinite reverse;
+    }
+ 
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+    }
+ 
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+ 
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease both;
+    }
+ 
+    .tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 2s step-end infinite;
+    }
+ 
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+ 
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.9s 0.1s ease both;
+    }
+ 
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+ 
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+ 
+    .hero-meta {
+      display: flex;
+      gap: 2rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+ 
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+ 
+    .meta-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+ 
+    .meta-value {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+ 
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+ 
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(12, 15, 10, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+ 
+    nav ul {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      list-style: none;
+      gap: 0;
+    }
+ 
+    nav a {
+      display: block;
+      padding: 1rem 1.2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+ 
+    nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+ 
+    /* ── SECTIONS ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem 8rem;
+    }
+ 
+    section {
+      margin-bottom: 6rem;
+      animation: fadeUp 0.6s ease both;
+    }
+ 
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+ 
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.15;
+    }
+ 
+    h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--accent2);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 2rem 0 1rem;
+    }
+ 
+    p { margin-bottom: 1rem; color: var(--text); }
+ 
+    /* ── STEPS ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      counter-reset: steps;
+    }
+ 
+    .step {
+      display: grid;
+      grid-template-columns: 3rem 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      counter-increment: steps;
+    }
+ 
+    .step:last-child { border-bottom: none; }
+ 
+    .step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: var(--border);
+      line-height: 1;
+      padding-top: 0.15rem;
+      transition: color 0.3s;
+    }
+ 
+    .step:hover .step-num { color: var(--accent); }
+ 
+    .step-body h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+ 
+    .step-body p { color: var(--muted); font-size: 0.95rem; margin: 0; }
+ 
+    /* ── CODE BLOCKS ── */
+    .code-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+ 
+    .code-header {
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
     }
-    .paso h4 { margin-bottom: 0.3rem; color: var(--verde); }
-    .paso p  { font-size: 0.95rem; color: #555; margin: 0; }
-    /* ── Aviso ── */
-    .aviso {
-      background: var(--verde-claro);
-      border-left: 4px solid var(--acento);
-      padding: 1rem 1.2rem;
-      border-radius: 0 6px 6px 0;
-      margin: 1.2rem 0;
+ 
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #febc2e; }
+    .dot-g { background: #28c840; }
+ 
+    .code-lang {
+      margin-left: auto;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
     }
-    /* ── Tabla ── */
-    table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-    th { background: var(--verde); color: white; padding: 0.6rem 1rem; text-align: left; }
-    td { padding: 0.6rem 1rem; border-bottom: 1px solid #dee2e6; }
-    tr:nth-child(even) td { background: var(--verde-claro); }
-    /* ── Pie ── */
-    footer {
-      text-align: center;
+ 
+    pre {
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+ 
+    .kw { color: var(--accent); }
+    .str { color: var(--gold); }
+    .cmt { color: var(--muted); font-style: italic; }
+    .attr { color: var(--accent2); }
+ 
+    /* ── CALLOUTS ── */
+    .callout {
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      padding: 1.2rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+    }
+ 
+    .callout-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+ 
+    .callout p { color: var(--muted); font-size: 0.92rem; margin: 0; }
+ 
+    /* ── GRID CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+ 
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
       padding: 1.5rem;
-      border-top: 2px solid var(--acento);
-      color: var(--gris);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+ 
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+ 
+    .card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+ 
+    .card h4 {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+ 
+    .card p {
       font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0;
+    }
+ 
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+ 
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+ 
+    th {
+      background: var(--surface2);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+ 
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface); }
+ 
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.6rem;
+      border-radius: 100px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      background: rgba(168,224,99,0.12);
+      color: var(--accent);
+      border: 1px solid rgba(168,224,99,0.3);
+    }
+ 
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+ 
+    footer a { color: var(--accent); text-decoration: none; }
+ 
+    /* ── SCROLL REVEAL ── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+ 
+    [data-reveal].visible {
+      opacity: 1;
+      transform: none;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>Mi Documentación Técnica</h1>
-    <p>GitHub Pages · Despliegue de Aplicaciones Web</p>
-  </header>
-
-  <nav>
-    <a href="#que-es">¿Qué es?</a>
-    <a href="#pasos">Pasos</a>
-    <a href="#ventajas">Ventajas</a>
-  </nav>
-
-  <main>
-
-    <section id="que-es">
+ 
+<header>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-inner">
+    <div class="tag">GitHub Pages · Despliegue Estático</div>
+    <h1>Publicar sin<br><em>servidores.</em></h1>
+    <p class="subtitle">Documentación técnica sobre cómo crear, versionar y desplegar sitios web estáticos usando GitHub Pages.</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Módulo</span>
+        <span class="meta-value">RA3 · Despliegue</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Plataforma</span>
+        <span class="meta-value">GitHub Pages</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Tipo</span>
+        <span class="meta-value">Sitio Estático</span>
+      </div>
+    </div>
+  </div>
+</header>
+ 
+<nav>
+  <ul>
+    <li><a href="#que-es">¿Qué es?</a></li>
+    <li><a href="#pasos">Pasos</a></li>
+    <li><a href="#estructura">Estructura</a></li>
+    <li><a href="#ventajas">Ventajas</a></li>
+    <li><a href="#conceptos">Conceptos</a></li>
+  </ul>
+</nav>
+ 
+<main>
+ 
+  <!-- ── SECCIÓN 1 ── -->
+  <section id="que-es" data-reveal>
+    <div class="section-header">
+      <span class="section-num">01 ——</span>
       <h2>¿Qué es GitHub Pages?</h2>
-      <p>GitHub Pages es un servicio de hosting estático gratuito que
-         permite publicar sitios web directamente desde un repositorio.
-         No necesitas servidor ni configuración compleja.</p>
-      <div class="aviso">
-        <strong>💡 Nota:</strong> Solo admite sitios estáticos
-        (HTML, CSS, JS). No ejecuta código en el servidor.
+    </div>
+    <p>GitHub Pages es un servicio de hosting estático integrado directamente en GitHub. Permite publicar sitios web a partir de los archivos de un repositorio sin necesidad de configurar ningún servidor externo, dominio de pago ni pipeline de CI/CD complejo.</p>
+    <p>El flujo es simple: subes tu código HTML/CSS/JS a un repositorio, activas Pages en los ajustes, y GitHub se encarga del resto. En cuestión de minutos tu sitio estará accesible en <code style="font-family:'DM Mono',monospace;font-size:0.85em;color:var(--accent)">https://&lt;usuario&gt;.github.io/&lt;repo&gt;</code>.</p>
+ 
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🗂️</div>
+        <h4>Basado en Git</h4>
+        <p>Cada push a la rama configurada activa el despliegue automáticamente.</p>
       </div>
-    </section>
-
-    <section id="pasos">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h4>Gratis</h4>
+        <p>Repositorios públicos pueden usar Pages sin ningún coste adicional.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h4>HTTPS automático</h4>
+        <p>GitHub gestiona el certificado TLS. Tu sitio siempre sirve en HTTPS.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h4>CDN global</h4>
+        <p>El contenido se distribuye desde los servidores de GitHub a nivel mundial.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ── SECCIÓN 2 ── -->
+  <section id="pasos" data-reveal>
+    <div class="section-header">
+      <span class="section-num">02 ——</span>
       <h2>Pasos para publicar</h2>
-      <div class="pasos">
-        <div class="paso">
-          <div class="num">1</div>
-          <div>
-            <h4>Crear repositorio en GitHub</h4>
-            <p>Repositorio público con un README inicial.</p>
-          </div>
-        </div>
-        <div class="paso">
-          <div class="num">2</div>
-          <div>
-            <h4>Añadir index.html</h4>
-            <p>Crear el archivo de entrada con tu contenido HTML.</p>
-          </div>
-        </div>
-        <div class="paso">
-          <div class="num">3</div>
-          <div>
-            <h4>Activar GitHub Pages</h4>
-            <p>Settings → Pages → rama main → / (root) → Save.</p>
-          </div>
-        </div>
-        <div class="paso">
-          <div class="num">4</div>
-          <div>
-            <h4>Acceder a tu URL</h4>
-            <p>https://&lt;usuario&gt;.github.io/&lt;repositorio&gt;</p>
-          </div>
+    </div>
+ 
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>Crear una cuenta en GitHub</h4>
+          <p>Accede a <strong>github.com</strong> y regístrate con tu correo. Elige un nombre de usuario que sea el mismo que aparecerá en tu URL de Pages.</p>
         </div>
       </div>
-    </section>
-
-    <section id="ventajas">
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>Crear un nuevo repositorio</h4>
+          <p>Haz clic en el botón <em>New repository</em>. Dale un nombre descriptivo, márcalo como <strong>Public</strong> e inicialízalo con un README. Solo los repositorios públicos tienen acceso gratuito a Pages.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>Crear el archivo index.html</h4>
+          <p>El archivo de entrada de tu sitio debe llamarse <code style="font-family:'DM Mono',monospace;color:var(--accent)">index.html</code>. Puedes crearlo directamente en GitHub con el botón <em>Add file → Create new file</em> o subirlo desde tu máquina.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h4>Subir los archivos al repositorio</h4>
+          <p>Haz commit del archivo. Si trabajas en local, puedes usar <code style="font-family:'DM Mono',monospace;color:var(--accent)">git add . && git commit -m "Add site" && git push</code>. Los cambios se reflejan en la rama <strong>main</strong>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h4>Activar GitHub Pages</h4>
+          <p>Ve a <strong>Settings → Pages</strong> en tu repositorio. En <em>Source</em> selecciona la rama <strong>main</strong> y la carpeta <strong>/ (root)</strong>. Pulsa <em>Save</em>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">06</div>
+        <div class="step-body">
+          <h4>Acceder a tu sitio publicado</h4>
+          <p>Tras unos segundos (o minutos la primera vez), GitHub generará la URL y la mostrará en la sección Pages. Tu sitio estará en <code style="font-family:'DM Mono',monospace;color:var(--accent)">https://&lt;usuario&gt;.github.io/&lt;repo&gt;</code>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ── SECCIÓN 3 ── -->
+  <section id="estructura" data-reveal>
+    <div class="section-header">
+      <span class="section-num">03 ——</span>
+      <h2>Estructura del proyecto</h2>
+    </div>
+    <p>Un sitio estático básico puede componerse de un único archivo, pero una estructura ordenada facilita el mantenimiento:</p>
+ 
+    <div class="code-block">
+      <div class="code-header">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="code-lang">TREE</span>
+      </div>
+      <pre>mi-repositorio/
+├── <span class="kw">index.html</span>          <span class="cmt"># Punto de entrada obligatorio</span>
+├── <span class="attr">css/</span>
+│   └── styles.css      <span class="cmt"># Estilos separados (opcional)</span>
+├── <span class="attr">js/</span>
+│   └── main.js         <span class="cmt"># Scripts (opcional)</span>
+├── <span class="attr">img/</span>
+│   └── logo.png        <span class="cmt"># Recursos de imagen</span>
+└── README.md           <span class="cmt"># Descripción del proyecto</span></pre>
+    </div>
+ 
+    <div class="callout">
+      <div class="callout-title">💡 Importante</div>
+      <p>GitHub Pages sirve el archivo <strong>index.html</strong> que esté en la raíz del repositorio (o en la carpeta <code>/docs</code> si así lo configuras). Sin ese archivo, el sitio no tendrá punto de entrada.</p>
+    </div>
+ 
+    <p>Un ejemplo mínimo de <code style="font-family:'DM Mono',monospace;color:var(--accent)">index.html</code>:</p>
+ 
+    <div class="code-block">
+      <div class="code-header">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="code-lang">HTML</span>
+      </div>
+      <pre><span class="cmt">&lt;!-- Estructura mínima --&gt;</span>
+<span class="kw">&lt;!DOCTYPE html&gt;</span>
+<span class="kw">&lt;html</span> <span class="attr">lang</span>=<span class="str">"es"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;meta</span> <span class="attr">charset</span>=<span class="str">"UTF-8"</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;title&gt;</span>Mi sitio<span class="kw">&lt;/title&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>
+    <span class="kw">&lt;h1&gt;</span>Hola mundo<span class="kw">&lt;/h1&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></pre>
+    </div>
+  </section>
+ 
+  <!-- ── SECCIÓN 4 ── -->
+  <section id="ventajas" data-reveal>
+    <div class="section-header">
+      <span class="section-num">04 ——</span>
       <h2>Ventajas e inconvenientes</h2>
+    </div>
+ 
+    <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>Aspecto</th><th>Valoración</th></tr>
+          <tr>
+            <th>Aspecto</th>
+            <th>Descripción</th>
+            <th>Valoración</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td>Coste</td><td>✅ Gratuito para repos públicos</td></tr>
-          <tr><td>Configuración</td><td>✅ Sin servidor propio</td></tr>
-          <tr><td>HTTPS</td><td>✅ Automático</td></tr>
-          <tr><td>Backend</td><td>⚠️ No disponible</td></tr>
-          <tr><td>Repos privados</td><td>⚠️ Requiere plan de pago</td></tr>
+          <tr>
+            <td>Coste</td>
+            <td>Totalmente gratuito para repos públicos</td>
+            <td><span class="badge">✓ Ventaja</span></td>
+          </tr>
+          <tr>
+            <td>Configuración</td>
+            <td>Sin instalación de servidor ni DNS manual</td>
+            <td><span class="badge">✓ Ventaja</span></td>
+          </tr>
+          <tr>
+            <td>Integración CI/CD</td>
+            <td>Despliegue automático en cada push</td>
+            <td><span class="badge">✓ Ventaja</span></td>
+          </tr>
+          <tr>
+            <td>Backend</td>
+            <td>Solo sitios estáticos; sin PHP, Node, bases de datos</td>
+            <td><span class="badge" style="background:rgba(232,201,109,0.1);color:var(--gold);border-color:rgba(232,201,109,0.3)">△ Limitación</span></td>
+          </tr>
+          <tr>
+            <td>Repositorios privados</td>
+            <td>Requieren plan de pago para usar Pages</td>
+            <td><span class="badge" style="background:rgba(232,201,109,0.1);color:var(--gold);border-color:rgba(232,201,109,0.3)">△ Limitación</span></td>
+          </tr>
+          <tr>
+            <td>Límite de tamaño</td>
+            <td>Repositorio máximo de 1 GB, archivos hasta 100 MB</td>
+            <td><span class="badge" style="background:rgba(232,201,109,0.1);color:var(--gold);border-color:rgba(232,201,109,0.3)">△ Limitación</span></td>
+          </tr>
         </tbody>
       </table>
-    </section>
-
-  </main>
-
-  <footer>
-    <p>Creado con HTML y CSS · Desplegado con GitHub Pages</p>
-  </footer>
-
+    </div>
+  </section>
+ 
+  <!-- ── SECCIÓN 5 ── -->
+  <section id="conceptos" data-reveal>
+    <div class="section-header">
+      <span class="section-num">05 ——</span>
+      <h2>Conceptos clave</h2>
+    </div>
+ 
+    <h3>Sitio estático vs dinámico</h3>
+    <p>Un sitio <strong>estático</strong> sirve archivos HTML/CSS/JS tal cual están almacenados: sin procesamiento en servidor, sin base de datos. Un sitio <strong>dinámico</strong> genera el HTML en tiempo de ejecución según la petición, el usuario o los datos.</p>
+ 
+    <h3>Rama y carpeta fuente</h3>
+    <p>GitHub Pages puede servir el contenido desde la raíz de la rama <code style="font-family:'DM Mono',monospace;color:var(--accent)">main</code> o desde una subcarpeta <code style="font-family:'DM Mono',monospace;color:var(--accent)">/docs</code>. Esto permite mantener el código fuente y la documentación publicada en el mismo repositorio sin mezclar ficheros.</p>
+ 
+    <h3>Caché y tiempo de despliegue</h3>
+    <p>Tras hacer push, el despliegue suele tardar entre 30 segundos y 2 minutos. Si el sitio no refleja los cambios, fuerza la recarga con <kbd style="background:var(--surface2);padding:0.1rem 0.4rem;border-radius:4px;font-size:0.8rem">Ctrl + Shift + R</kbd> para limpiar la caché del navegador.</p>
+ 
+    <div class="callout" style="border-color: var(--gold)">
+      <div class="callout-title" style="color:var(--gold)">⚙️ Tip de workflow</div>
+      <p>Trabaja en una rama de desarrollo (<code style="color:var(--accent);font-family:'DM Mono',monospace">dev</code>) y haz merge a <code style="color:var(--accent);font-family:'DM Mono',monospace">main</code> solo cuando el sitio esté listo. Así, Pages solo desplegará versiones estables.</p>
+    </div>
+  </section>
+ 
+</main>
+ 
+<footer>
+  <p>Creado con HTML · CSS · GitHub Pages &nbsp;·&nbsp; <a href="https://pages.github.com" target="_blank">pages.github.com</a></p>
+</footer>
+ 
+<script>
+  // Scroll reveal
+  const targets = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  targets.forEach(t => io.observe(t));
+</script>
+ 
 </body>
 </html>
